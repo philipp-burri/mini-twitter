@@ -12,39 +12,35 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return Post::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string', 
+        ]);
 
+        Post::create([
+            'title'=>$validated['title'],
+            'content'=>$validated['content']
+
+        ]);
+
+        return response()->json(['message' => 'Post created succesfully'], 201);
+    }
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
+        $post = Post::find($id);
+        return response()->json($post, 200);
     }
 
     /**
