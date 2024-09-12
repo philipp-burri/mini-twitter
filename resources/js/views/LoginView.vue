@@ -24,12 +24,14 @@ const handleLogin = async () => {
 </script>
 <template>
     <div>
-        <h1>Login View</h1>
+        <h1>Live and Trending</h1>
+        <p>Welcome Back!</p>
         <form @submit.prevent="handleLogin">
             <label for="email">Email:</label>
             <input type="text" v-model="email" />
             <label for="password">Password:</label>
             <input type="password" v-model="password" />
+            <p>Don't have an account? <router-link to="/register">Registrieren</router-link></p>
             <button type="submit">Login</button>
         </form>
     </div>

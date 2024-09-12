@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from "@/store/AuthStore";
 import { storeToRefs } from 'pinia';
-import HomeView from '../views/HomeView.vue'; // Adjust the path if necessary
+
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.VITE_BASE_URL),
+    history: createWebHistory("/"),
     routes: [
         {
             path: "/",
             name: "home",
-            component: HomeView,
+            redirect: "/login"
         },
         {
             path: "/dashboard",
@@ -22,10 +22,23 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
+            path: "/create",
+            name: "create",
+
+            component: () => import("../views/CreateView.vue"),
+            meta: { requiresAuth: true},
+        },
+        {
             // Hier brauchen wir keine Meta-Informationen, da diese Route für nicht authentifizierte User zugänglich sein soll.
             path: "/login",
             name: "login",
             component: () => import("../views/LoginView.vue"),
+        },
+        {
+            // Hier brauchen wir keine Meta-Informationen, da diese Route für nicht authentifizierte User zugänglich sein soll.
+            path: "/register",
+            name: "register",
+            component: () => import("../views/RegisterView.vue"),
         },
     ],
 });

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 
-Route::post('/register', [UserController::class, 'store']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
    Route::get('/user', [UserController::class, 'show']); 
