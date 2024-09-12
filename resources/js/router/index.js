@@ -40,6 +40,13 @@ const router = createRouter({
             name: "register",
             component: () => import("../views/RegisterView.vue"),
         },
+        {
+
+            path: "/post/create",
+            name: "post-create",
+            component: () => import("../views/PostCreate.vue"),
+
+        }
     ],
 });
 

@@ -18,7 +18,8 @@
   import { authClient } from '@/store/AuthStore';
   const { authUser } = storeToRefs(useAuthStore());
   import { storeToRefs } from "pinia";
-import { useAuthStore } from "@/store/AuthStore";
+  import { useAuthStore } from "@/store/AuthStore";
+
   
   const posts = ref([]);
 

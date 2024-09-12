@@ -3,10 +3,12 @@
 <script setup>
 import { ref } from "vue";
 import { useAuthStore } from "@/store/AuthStore";
+import router from "@/router";
 
 
 
-const { register } = useAuthStore();
+
+const { register,getAuthUser } = useAuthStore();
 
 
 const data = ref({
@@ -16,8 +18,8 @@ const data = ref({
     password_confirmation: ""
 })
 
-const handleRegister = () => {
-    register(
+const handleRegister = async () => {
+    const responseRegister = await register(
         {
             name: data.value.name,
             email: data.value.email,
@@ -25,11 +27,17 @@ const handleRegister = () => {
             password_confirmation: data.value.password_confirmation
         }
     )
-    console.log(data.value.name);
+        if(responseRegister.status !== 201) {
+            return alert("Something went wrong")
+        }    
+
+        const responseUser = await getAuthUser()
+        if(responseUser.status == 200) router.push("/dashboard")
 }
 </script>
 
 <template>
+
     <form method="POST" @submit.prevent="handleRegister">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -47,6 +55,6 @@ const handleRegister = () => {
             <label for="password_confirmation">Passwort bestätigen</label>
             <input type="password" id="password_confirmation" v-model="data.password_confirmation" />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Register</button>
     </form>
 </template>
