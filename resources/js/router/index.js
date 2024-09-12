@@ -37,8 +37,9 @@ router.beforeEach(async (to, from, next) => {
     const reqAuth = to.matched.some((record) => record.meta.requiresAuth);
 
     if (reqAuth && !authUser.value) {
+        console.log('logRouter');
         await getAuthUser();
-        if (!authUser.value) next("/login");
+        if (!authUser.value) return next("/login");
         next();
     } else {
         next(); // make sure to always call next()!
