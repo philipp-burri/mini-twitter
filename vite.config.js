@@ -1,17 +1,26 @@
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
-import vue from "@vitejs/plugin-vue"; // add the vue plugin
-import { fileURLToPath, URL } from "node:url"; // add the fileURLToPath and URL
+import vue from "@vitejs/plugin-vue";
+import { fileURLToPath, URL } from "node:url";
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
     plugins: [
-        vue(), // use the vue plugin
+        vue(),
         laravel({
             input: ["resources/css/app.css", "resources/js/app.js"],
             refresh: true,
         }),
     ],
-    // add the resolve object
+    css: {
+        postcss: {
+            plugins: [
+                tailwindcss(),
+                autoprefixer(),
+            ],
+        },
+    },
     resolve: {
         alias: {
             "@": fileURLToPath(new URL("./resources/js", import.meta.url)),

@@ -1,4 +1,5 @@
 <script setup>
+import '../css/app.css';
 import { RouterLink, RouterView } from "vue-router";
 
 import { useAuthStore } from '@/store/AuthStore';

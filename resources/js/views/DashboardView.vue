@@ -13,11 +13,11 @@ const handleLogout = () => {
 };
 </script>
 <template>
+        <Header />
     <div>
         <h1>Dashboard View</h1>
         <p>Welcome, {{ authUser.name }}</p>
         <button @click="handleLogout">Logout</button>
-        <Header />
         <PostView />
     </div>
 </template>
