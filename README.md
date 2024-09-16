@@ -1,4 +1,5 @@
-```git add . && git commit -m "Install @headlessui/vue and @heroicons/vue" && npm install @headlessui/vue @heroicons/vue && git add . && git commit -m "Update dependencies" && git push
+```
+git add . && git commit -m "Install @headlessui/vue and @heroicons/vue" && npm install @headlessui/vue @heroicons/vue && git add . && git commit -m "Update dependencies" && git push
 ```
 
 
