@@ -28,11 +28,18 @@ onMounted(async ()=>{
 
 // posts filtern
 const filteredPosts = computed(() => {
-    if (filterOption.value === 'recent') {
-        return [...posts.value].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-    } else {
-        return [...posts.value].sort((a, b) => (b.likes || 0) - (a.likes || 0))
-    }
+  switch(filterOption.value) {
+    case 'recent':
+      return [...posts.value].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    case 'popular':
+      return [...posts.value].sort((a, b) => (b.likes || 0) - (a.likes || 0))
+    case 'friends':
+      // Implement friends filter logic here
+
+      return posts.value
+    default:
+      return posts.value
+  }
 })
 
 // Login
@@ -58,13 +65,28 @@ const dislikePost = (postId) => {
   <div class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <div class="max-w-2xl mx-auto mt-20">
-        <!-- Filter -->
-        <div class="mb-4">
-          <label for="filter" class="mr-2">Filter by:</label>
-          <select v-model="filterOption" id="filter" class="border rounded p-1 custom-select">
-            <option value="recent">Most Recent</option>
-            <option value="likes">Most Likes</option>
-          </select>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-semibold">Feeds</h2>
+          <div class="flex space-x-2">
+            <button 
+              @click="filterOption = 'recent'" 
+              :class="['px-3 py-1 rounded', filterOption === 'recent' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+            >
+              Recent
+            </button>
+            <button 
+              @click="filterOption = 'popular'" 
+              :class="['px-3 py-1 rounded', filterOption === 'popular' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+            >
+              Popular
+            </button>
+            <button 
+              @click="filterOption = 'friends'" 
+              :class="['px-3 py-1 rounded', filterOption === 'friends' ? 'bg-blue-500 text-white' : 'bg-gray-200']"
+            >
+              Friends
+            </button>
+          </div>
         </div>
 
         <ul v-if="filteredPosts.length" class="space-y-6">
@@ -84,14 +106,14 @@ const dislikePost = (postId) => {
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                 </svg>
-                Like ({{ post.likes || 0 }})
+                ({{ post.likes || 0 }})
               </button>
 
               <button @click="dislikePost(post.id)" class="flex items-center text-gray-500 hover:text-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.095c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
                 </svg>
-                Dislike
+                ({{  post.dislikes || 0 }})
               </button>
 
             </div>
@@ -99,7 +121,7 @@ const dislikePost = (postId) => {
         </ul>
 
         <p v-else class="text-center text-gray-500">No posts available.</p>
-        
+
       </div>
     </div>
   </div>
