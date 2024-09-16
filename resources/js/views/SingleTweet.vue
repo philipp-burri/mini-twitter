@@ -1,11 +1,19 @@
 <script setup>
 import ShowDate from '../components/ShowDate.vue';
 import Footer from '../components/Footer.vue';
+import Header from '../components/Header.vue';
 
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { authClient } from '@/store/AuthStore';
-import Header from '../components/Header.vue';
+import { authClient,useAuthStore } from '@/store/AuthStore';
+import { storeToRefs } from "pinia";
+
+
+
+
+const authStore = useAuthStore();
+const { authUser } = storeToRefs(useAuthStore());
+
 import { format, parseISO } from 'date-fns'; // Importieren Sie diese Funktionen
 import { de } from 'date-fns/locale'; // Importieren Sie die deutsche Lokalisierung, falls gewünscht
 
@@ -60,12 +68,14 @@ onMounted(getPost);
     
     <div class="mt-20" v-else-if="post">
       <p>Tweet from <ShowDate :date="post.created_at" /></p>
+      <p class="text-xl">Posted by @{{ authUser.name }}</p>
       <h1 class="text-2xl font-bold mt-8">{{ post.title }}</h1>
       <p class="text-gray-700 mt-3 mb-[3.25rem]">{{ post.content }}</p>
       <RouterLink :to="{ name: 'post-edit', params: { id: post.id } }" class="text-blue-500 hover:underline">
         <button class="bg-black text-white px-4 py-2 mr-1 rounded-xl ">
           Edit
         </button>
+
       </RouterLink>
       <button @click="deletePost(post.id)" 
         class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-500 transition-colors"

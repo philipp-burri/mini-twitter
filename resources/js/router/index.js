@@ -54,12 +54,19 @@ const router = createRouter({
         },
    
 
-    {
-        path: '/post/:id',
-        name: 'single-post',
-        component: () => import('../views/SingleTweet.vue'),
-        meta: { requiresAuth: true },
-      } 
+        {
+            path: '/post/:id',
+            name: 'single-post',
+            component: () => import('../views/SingleTweet.vue'),
+            meta: { requiresAuth: true },
+        },
+        
+
+        {
+            path: '/settings',
+            name: 'settings',
+            component: () => import('../views/SettingsPage.vue'),
+        }
     ],
 });
 
