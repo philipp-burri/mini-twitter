@@ -11,11 +11,11 @@ const { authUser } = storeToRefs(useAuthStore());
     <header>
         <div>
             <nav>
-                <RouterLink to="/" v-if="authUser">Home</RouterLink>
+                <!-- <RouterLink to="/" v-if="authUser">Home</RouterLink>
                 <RouterLink to="/dashboard" v-if="authUser">Dashboard</RouterLink>
                 <RouterLink to="/login" v-if= "authUser == 0">Login</RouterLink>
                 <RouterLink to="/register" v-if= "authUser == 0">Register</RouterLink>
-                <RouterLink :to="{name: 'post-create' }">Create</RouterLink>
+                <RouterLink :to="{name: 'post-create' }">Create</RouterLink> -->
             </nav>
         </div>
     </header>

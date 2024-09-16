@@ -9,7 +9,10 @@ const router = createRouter({
         {
             path: "/",
             name: "home",
-            redirect: "/login"
+            meta: { requiresAuth: true }, //leitet zur Login Seite um wenn User nicht authentiziert ist.
+           
+
+            component: () => import("../views/HomeView.vue"),
         },
         {
             path: "/dashboard",
@@ -20,13 +23,6 @@ const router = createRouter({
             component: () => import("../views/DashboardView.vue"),
             // die Meta-Informationen verwenden wir um den Zugriff zu schützen
             meta: { requiresAuth: true },
-        },
-        {
-            path: "/create",
-            name: "create",
-
-            component: () => import("../views/CreateView.vue"),
-            meta: { requiresAuth: true},
         },
         {
             // Hier brauchen wir keine Meta-Informationen, da diese Route für nicht authentifizierte User zugänglich sein soll.
@@ -46,7 +42,24 @@ const router = createRouter({
             name: "post-create",
             component: () => import("../views/PostCreate.vue"),
 
-        }
+        },
+
+        {
+
+            path: "/post/edit/:id",
+            name: "post-edit",
+            component: () => import("../views/PostEdit.vue"),
+
+
+        },
+   
+
+    {
+        path: '/post/:id',
+        name: 'single-post',
+        component: () => import('../views/SingleTweet.vue'),
+        meta: { requiresAuth: true },
+      } 
     ],
 });
 
@@ -56,14 +69,20 @@ router.beforeEach(async (to, from, next) => {
     const { authUser } = storeToRefs(useAuthStore());
     const reqAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-    if (reqAuth && !authUser.value) {
-        console.log('logRouter');
-        await getAuthUser();
-        if (!authUser.value) return next("/login");
-        next();
-    } else {
-        next(); // make sure to always call next()!
+    if (reqAuth) {
+        if (!authUser.value) {
+            await getAuthUser();
+        }
+        if (!authUser.value) {
+            return next("/login");
+        }
     }
+    // Wenn der Benutzer eingeloggt ist und versucht, auf Login oder Register zuzugreifen, leiten Sie ihn zum Dashboard um
+    if (authUser.value && (to.path === '/login' || to.path === '/register')) {
+        return next('/dashboard');
+    }
+
+    next();
 });
 
 export default router;

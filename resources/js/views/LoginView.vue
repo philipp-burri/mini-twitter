@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useAuthStore } from "@/store/AuthStore";
 import router from "@/router";
 const { login, getAuthUser } = useAuthStore();
+import Header from "../components/Header.vue";
 
 const email = ref("");
 const password = ref("");
@@ -22,17 +23,57 @@ const handleLogin = async () => {
     }
 };
 </script>
+
+
 <template>
-    <div>
-        <h1>Live and Trending</h1>
-        <p>Welcome Back!</p>
-        <form @submit.prevent="handleLogin">
-            <label for="email">Email:</label>
-            <input type="text" v-model="email" />
-            <label for="password">Password:</label>
-            <input type="password" v-model="password" />
-            <p>Don't have an account? <router-link to="/register">Registrieren</router-link></p>
-            <button type="submit">Login</button>
-        </form>
+<Header />
+<div class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <div class="w-[768px] text-left items-left mb-8 mt-[6.8rem]">
+      <h1 class="text-3xl font-bold mb-1">Live and Trending</h1>
+      <p class="text-xl text-gray-500 mb-8">Welcome Back!</p>
     </div>
+    
+    <div class="bg-white px-8 rounded-sm w-[768px] h-[437px]">
+      <p class="text-3xl font-bold mt-10 mb-8">Login</p>
+      <form @submit.prevent="handleLogin" class="space-y-6">
+        <div>
+          <label for="email" class="block text-2xl font-normal text-gray-700 mb-1">E-Mail:</label>
+          <input 
+            type="email" 
+            id="email" 
+            v-model="email" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        
+        <div>
+          <label for="password" class="block text-2xl font-normal text-gray-700 mb-1">Password:</label>
+          <input 
+            type="password" 
+            id="password" 
+            v-model="password" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        
+
+        <div class="flex justify-between">
+          <p class="text-sm font-normal mt-8">
+            Don't have an account? 
+            <router-link to="/register" class="text-blue-600 hover:underline"> Sign up</router-link>
+          </p>
+
+          <button 
+            type="submit" 
+            class="text-sm px-3 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Login
+          </button>
+      </div>
+      </form>
+    </div>
+
+</div>
 </template>

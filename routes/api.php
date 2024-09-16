@@ -5,6 +5,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 
 
+Route::put('/posts/{id}' , [PostController::class, 'update']);
+
 Route::group(['middleware' => ['auth:sanctum']], function(){
    Route::get('/user', [UserController::class, 'show']); 
    Route::get('/posts/{id}', [PostController::class, 'show']);
