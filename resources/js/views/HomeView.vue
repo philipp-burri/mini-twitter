@@ -32,12 +32,12 @@ const handleLogout = () => {
   <Header />
   <div class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
-      <div class="flex flex-col justify-center items-center mb-8">
+     <!--  <div class="flex flex-col justify-center items-center mb-8">
         <p class="text-2xl mb-2">Welcome, {{ authUser.name }}</p>
         <button @click="handleLogout" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-200">Logout</button>
-      </div>
+      </div> -->
       
-      <div class="max-w-2xl mx-auto">
+      <div class="max-w-2xl mx-auto mt-20">
         <ul v-if="posts.length" class="space-y-6">
           <li v-for="post in posts" :key="post.id" class="border border-gray-200 bg-white rounded-lg p-6 shadow-sm">
             <h3 class="text-xl font-semibold mb-2 break-words">{{ post.title }}</h3>
