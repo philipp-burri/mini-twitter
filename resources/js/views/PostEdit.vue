@@ -1,18 +1,17 @@
 <script setup>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-
+import LeftSidebar from "../components/LeftSidebar.vue";
+import RightSidebar from "../components/RightSidebar.vue";
 import { ref, onMounted } from 'vue';
 import { authClient } from '@/store/AuthStore';
 import { useRoute, useRouter } from 'vue-router';
 
-
-
 const route = useRoute();
 const router = useRouter();
 const post = ref({});
-const title = ref('');  // Fügen Sie diese Zeile hinzu
-const content = ref('');  // Fügen Sie diese Zeile hinzu
+const title = ref('');
+const content = ref('');
 const post_id = route.params.id;
 
 const getPost = async (id) => {
@@ -32,62 +31,73 @@ const updatePost = async () => {
             title: title.value,
             content: content.value
         });
-
-        if(res.status ==200) {
+        if(res.status == 200) {
           router.push({name: "dashboard"})
         }
-        } catch (error) {
+    } catch (error) {
         console.error('Error updating post:', error);
     }
 };
 
 onMounted(() => {
-
   getPost(post_id);
 });
 </script>
 
-
 <template>
-  <Header />
-  <div class="flex justify-center bg-gray-100 min-h-screen p-4">
-    <div class="w-full max-w-2xl">
-      <h2 class="mt-20 text-3xl font-bold">Edit Tweet</h2>
-      <div class="bg-white rounded-sm mt-11">
-        <div class="p-6 sm:p-10">
-          <form @submit.prevent="updatePost">
-            <div class="mb-6">
-              <label for="title" class="font-normal text-gray-600 block mb-1 text-2xl">Title</label>
-              <input 
-                type="text" 
-                id="title" 
-                v-model="title" 
-                class="w-full font-normal px-3 py-2 border text-2xl border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+  <div class="bg-gradient-to-r from-blue-100 to-green-100 min-h-screen font-body">
+    <Header />
+    <div class="flex">
+      <LeftSidebar />
+
+      <div class="flex-grow container mx-auto px-4 py-8 w-3/5">
+        <div class="max-w-2xl mx-auto mt-20">
+          <h2 class="text-3xl font-bold mb-6 text-teal-700">Edit Tweet</h2>
+          <div class="bg-white rounded-2xl shadow-md">
+            <div class="p-8">
+              <form @submit.prevent="updatePost">
+                <div class="mb-6">
+                  <label for="title" class="block text-gray-700 text-2xl font-normal mb-2">Title</label>
+                  <input 
+                    type="text" 
+                    id="title" 
+                    v-model="title" 
+                    class="w-full px-3 py-2 border text-2xl border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label for="content" class="block text-gray-700 text-2xl font-normal mb-2">Content</label>
+                  <textarea 
+                    id="content" 
+                    v-model="content" 
+                    class="w-full px-3 py-2 border text-2xl border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500" 
+                    rows="6"
+                  ></textarea>
+                </div>
+                <div>
+                  <button 
+                    type="submit"
+                    class="bg-teal-500 text-white text-xl px-6 py-3 rounded-lg hover:bg-teal-600 transition-colors duration-300"
+                  >
+                    Update Tweet
+                  </button>
+                </div>
+              </form>
             </div>
-            <div class="mt-8">
-              <label for="content" class="font-normal text-gray-600  block mb-1 text-2xl">Content</label>
-              <textarea 
-                id="content" 
-                v-model="content" 
-                class="w-full font-normal px-3 py-2 border text-2xl border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                rows="4"
-              ></textarea>
-            </div>
-            <div>
-              <button 
-                type="submit"
-                class="mt-8 sm:w-auto bg-blue-500 text-white text-sm px-6 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200"
-              >
-                Update Tweet
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
+
+      <RightSidebar />
     </div>
+    <Footer />
   </div>
-
-<Footer />
-
 </template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+.font-body {
+  font-family: 'Quicksand', sans-serif;
+}
+</style>

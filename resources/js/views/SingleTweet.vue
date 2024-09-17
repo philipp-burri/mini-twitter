@@ -2,29 +2,20 @@
 import ShowDate from '../components/ShowDate.vue';
 import Footer from '../components/Footer.vue';
 import Header from '../components/Header.vue';
-
+import LeftSidebar from "../components/LeftSidebar.vue";
+import RightSidebar from "../components/RightSidebar.vue";
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { authClient,useAuthStore } from '@/store/AuthStore';
+import { authClient, useAuthStore } from '@/store/AuthStore';
 import { storeToRefs } from "pinia";
-
-
-
 
 const authStore = useAuthStore();
 const { authUser } = storeToRefs(useAuthStore());
-
-import { format, parseISO } from 'date-fns'; // Importieren Sie diese Funktionen
-import { de } from 'date-fns/locale'; // Importieren Sie die deutsche Lokalisierung, falls gewünscht
-
-
-
 const route = useRoute();
 const router = useRouter();
 const post = ref(null);
 const isLoading = ref(true);
 const error = ref(null);
-
 
 const getPost = async () => {
   isLoading.value = true;
@@ -53,43 +44,56 @@ onMounted(getPost);
 </script>
 
 <template>
+  <div class="bg-gradient-to-r from-blue-100 to-green-100 min-h-screen font-body">
     <Header />
-    <div class="bg-gray-100 min-h-screen">
-  <div class="container mx-auto max-w-2xl px-4 py-8">
- 
-    
-    <div v-if="isLoading" class="text-center text-gray-500">
-      Loading post...
-    </div>
-    
-    <div v-else-if="error" class="text-center text-red-500">
-      {{ error }}
-    </div>
-    
-    <div class="mt-20" v-else-if="post">
-      <p>Tweet from <ShowDate :date="post.created_at" /></p>
-      <p class="text-xl">Posted by @{{ authUser.name }}</p>
-      <h1 class="text-2xl font-bold mt-8">{{ post.title }}</h1>
-      <p class="text-gray-700 mt-3 mb-[3.25rem]">{{ post.content }}</p>
-      <RouterLink :to="{ name: 'post-edit', params: { id: post.id } }" class="text-blue-500 hover:underline">
-        <button class="bg-black text-white px-4 py-2 mr-1 rounded-xl ">
-          Edit
-        </button>
+    <div class="flex">
+      <LeftSidebar />
 
-      </RouterLink>
-      <button @click="deletePost(post.id)" 
-        class="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-500 transition-colors"
-        >
-          Delete
-        </button>
+      <div class="flex-grow container mx-auto px-4 py-8 w-3/5">
+        <div class="max-w-2xl mx-auto mt-20">
+          <div v-if="isLoading" class="text-center text-gray-500 text-xl">
+            Loading post...
+          </div>
+          
+          <div v-else-if="error" class="text-center text-red-500 text-xl">
+            {{ error }}
+          </div>
+          
+          <div v-else-if="post" class="bg-white rounded-2xl shadow-md p-8">
+            <p class="text-gray-500 mb-2">Tweet from <ShowDate :date="post.created_at" /></p>
+            <p class="text-xl text-teal-600 font-semibold mb-4">Posted by @{{ authUser.name }}</p>
+            <h1 class="text-3xl font-bold mb-4 text-teal-800">{{ post.title }}</h1>
+            <p class="text-gray-700 text-xl mb-8">{{ post.content }}</p>
+            <div class="flex space-x-4">
+              <RouterLink :to="{ name: 'post-edit', params: { id: post.id } }" class="text-blue-500 hover:underline">
+                <button class="bg-teal-500 text-white px-6 py-2 rounded-lg hover:bg-teal-600 transition-colors duration-300">
+                  Edit
+                </button>
+              </RouterLink>
+              <button @click="deletePost(post.id)" 
+                class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors duration-300"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+          
+          <div v-else class="text-center text-gray-500 text-xl">
+            No post found.
+          </div>
+        </div>
+      </div>
+
+      <RightSidebar />
     </div>
-    
-    <div v-else class="text-center text-gray-500">
-      No post found.
-    </div>
+    <Footer />
   </div>
-</div>
-
-<Footer />
-
 </template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+.font-body {
+  font-family: 'Quicksand', sans-serif;
+}
+</style>

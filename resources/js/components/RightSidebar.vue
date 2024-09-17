@@ -1,12 +1,12 @@
 <template>
-    <div class="w-1/5 pr-24 pt-24">
+    <div class="w-1/5 pr-[5rem] mt-[12rem]">
       <div class="flex flex-col mb-6">
         <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-teal-400">
           <img :src="`${baseUrl}/images/placeholder-img.jpg`" alt="Profile" class="w-full h-full object-cover rounded-full">
         </div>
         <h2 class="text-2xl font-bold mt-4 text-teal-700">{{ authUser.name }}</h2>
       </div>
-      <nav class="space-y-4 flex-col justify-center">
+      <nav class="space-y-4 flex-col">
         <router-link to="/friends" class="flex items-center text-2xl hover:text-teal-600 transition-colors duration-300">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
