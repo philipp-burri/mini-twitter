@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,11 +14,29 @@ class PostController extends Controller
     public function index()
     {
   
-            $posts = Post::all();
-            return $posts;
+        $posts = Post::with('user:id,name')->latest()->get();
+        return response()->json($posts);
     }
 
+    public function getMyPosts(Request $request)
+    {
+        $posts = Post::where('user_id', '=', $request->user()->id)->get();
+        return response()->json(['data' => $posts], 200);
+    }
 
+    public function getByUserId(Request $request, $user_id)
+    {
+        $posts = Post::where('user_id', '=', $request->user()->id)->get();
+        return response()->json(['data' => $posts], 200);
+
+    }
+
+    public function getByUserName(Request $request, $user_id)
+    {
+        $posts = Post::where('user_id', '=', $request->user()->id)->get();
+        return response()->json(['data' => $posts], 200);
+
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -26,11 +45,13 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string', 
+            'user_id' => $request->user()
         ]);
 
         Post::create([
             'title'=>$validated['title'],
-            'content'=>$validated['content']
+            'content'=>$validated['content'],
+            'user_id'=>$request->user()->id
 
         ]);
 
@@ -57,6 +78,10 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
+        if($request->user()->id !== $post->user->id){
+            return response()->json(['message' => 'You are not the owner!'], 402);
+        }
+
         $post->update([
             'title'=>$validated['title'],
             'content'=>$validated['content']
@@ -73,6 +98,9 @@ class PostController extends Controller
     public function destroy (Request $request, $id)
 {
     $post = Post::findOrFail($id);
+    if($request->user()->id !== $post->user->id){
+        return response()->json(['message' => 'You are not the owner!'], 402);
+    }
     $post->delete();
     return response()->json(['message' => 'Post deleted successfully'], 204);
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="w-1/5 pr-24 pt-24">
-      <div class="flex flex-col items-center mb-6">
-        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-teal-400 p-1">
+      <div class="flex flex-col mb-6">
+        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-teal-400">
           <img :src="`${baseUrl}/images/placeholder-img.jpg`" alt="Profile" class="w-full h-full object-cover rounded-full">
         </div>
         <h2 class="text-2xl font-bold mt-4 text-teal-700">{{ authUser.name }}</h2>

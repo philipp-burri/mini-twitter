@@ -5,8 +5,11 @@
       <LeftSidebar />
 
       <!-- Main content -->
-      <div class="flex-grow container mx-auto px-4 py-8 w-3/5">
+      <div class="flex-grow container mx-auto px-2 py-8 w-3/5">
         <div class="max-w-2xl mx-auto mt-20">
+
+        <!--   <PostCreate @post-created="getPosts" /> -->
+          
           <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-teal-700">Feeds</h2>
             <div class="flex space-x-2">
@@ -22,20 +25,22 @@
           </div>
 
           <ul v-if="filteredPosts.length" class="space-y-8">
-            <li v-for="post in filteredPosts" :key="post.id" class="bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <li v-for="post in filteredPosts" :key="post.id" class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-sm hover:cursor-pointer">
               <div class="flex flex-row justify-between items-center">
-                <p class="text-xl mb-1 text-teal-600 font-semibold">@{{ authUser.name }}</p>
+                <p class="text-xl mb-1 text-teal-600 font-semibold">@{{ post.user ? post.user.name : 'Unknown User' }}</p>
                 <p class="text-right text-sm text-gray-500"><ShowDate :date="post.created_at" /></p>
               </div>
               <h3 class="text-2xl font-bold mb-2 break-words text-teal-800">{{ post.title }}</h3>
               <p class="text-gray-700 mb-4 break-words">{{ post.content }}</p>
               <div class="flex space-x-4">
+
                 <button @click="likePost(post.id)" class="flex items-center text-gray-500 hover:text-teal-600 transition-colors duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                   </svg>
                   ({{ post.likes || 0 }})
                 </button>
+
                 <button @click="dislikePost(post.id)" class="flex items-center text-gray-500 hover:text-red-500 transition-colors duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.095c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
@@ -50,11 +55,15 @@
         </div>
       </div>
 
-      <RightSidebar />
+<RightSidebar />
+
     </div>
+
     <Footer />
+ 
   </div>
 </template>
+
 
 <script setup>
 import Header from '../components/Header.vue';
@@ -62,6 +71,7 @@ import Footer from '../components/Footer.vue';
 import ShowDate from '../components/ShowDate.vue';
 import LeftSidebar from '../components/LeftSidebar.vue';
 import RightSidebar from '../components/RightSidebar.vue';
+import PostCreate from '../components/PostCreate.vue';
 
 import { ref, onMounted, computed } from 'vue'
 import { storeToRefs } from "pinia";
@@ -84,9 +94,10 @@ const getPosts = async () => {
     const res = await authClient.get(`/api/posts`)
     posts.value = res.data
 }
-onMounted(async ()=>{
+onMounted(async () => {
     getPosts()
 })
+
 
 const filteredPosts = computed(() => {
   switch(filterOption.value) {
