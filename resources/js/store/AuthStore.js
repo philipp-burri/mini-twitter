@@ -46,10 +46,28 @@
                     return response;
                 } catch (error) {
                     this.user = null;
+                    if (error.response && error.response.status === 401) {
+                        console.log('User is not authenticated. Redirecting to login...');
+                        // Implement redirection to login page or handle unauthenticated state
+                        // For example: router.push('/login');
+                    } else {
+                        console.error('Error fetching auth user:', error);
+                    }
+                    throw error;
+                }
+            },
+   /*          async getAuthUser() {
+                try {
+                    await authClient.get("/sanctum/csrf-cookie");
+                    let response = await authClient.get("/api/user");
+                    this.user = response.data;
+                    return response;
+                } catch (error) {
+                    this.user = null;
                     console.error('Error fetching auth user:', error);
                     throw error; // Werfen Sie den Fehler, damit er in der Komponente gefangen werden kann
                 }
-            },
+            }, */
 
             async logout() {
                 try {

@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from "@/store/AuthStore";
 import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
 
+const isAuthChecking = ref(false);
 
 const router = createRouter({
     history: createWebHistory("/"),
@@ -76,15 +78,23 @@ router.beforeEach(async (to, from, next) => {
     const { authUser } = storeToRefs(useAuthStore());
     const reqAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-    if (reqAuth) {
-        if (!authUser.value) {
+    if (reqAuth && !authUser.value && !isAuthChecking.value) {
+        isAuthChecking.value = true;
+        try {
             await getAuthUser();
-        }
-        if (!authUser.value) {
-            return next("/login");
+        } catch (error) {
+            console.error('Error checking authentication:', error);
+            // Optionally handle specific error cases here
+        } finally {
+            isAuthChecking.value = false;
         }
     }
-    // Wenn der Benutzer eingeloggt ist und versucht, auf Login oder Register zuzugreifen, leiten Sie ihn zum Dashboard um
+
+    if (reqAuth && !authUser.value) {
+        return next("/login");
+    }
+
+    // Redirect authenticated users away from login/register pages
     if (authUser.value && (to.path === '/login' || to.path === '/register')) {
         return next('/dashboard');
     }
