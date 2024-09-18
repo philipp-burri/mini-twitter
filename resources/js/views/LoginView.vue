@@ -62,12 +62,12 @@ const handleLogin = async () => {
         <div class="flex justify-between">
           <p class="text-sm font-normal mt-8">
             Don't have an account? 
-            <router-link to="/register" class="text-blue-600 hover:underline"> Sign up</router-link>
+            <router-link to="/register" class="text-teal-600 hover:underline"> Sign up</router-link>
           </p>
 
           <button 
             type="submit" 
-            class="text-sm px-3 bg-blue-500 text-white rounded hover:bg-blue-600"
+            class="text-sm px-3 bg-teal-500 text-white rounded hover:bg-teal-600"
           >
             Login
           </button>

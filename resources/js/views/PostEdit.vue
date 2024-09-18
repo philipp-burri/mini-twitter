@@ -45,7 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-gradient-to-r from-blue-100 to-green-100 min-h-screen font-body">
+  <div class="bg-gradient-to-r from-teal-50 to-green-50 min-h-screen font-body">
     <Header />
     <div class="flex">
       <LeftSidebar />

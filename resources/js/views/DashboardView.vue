@@ -1,17 +1,17 @@
 <template>
-  <div class="bg-gradient-to-r from-teal-100 to-green-100 min-h-screen font-body">
+  <div class="bg-gradient-to-r from-teal-50 to-green-50 min-h-screen font-body">
     <Header />
     <div class="container mx-auto px-4 py-8 flex">
       <LeftSidebar />
       
       <div class="flex-grow mx-4 w-3/5">
-        <div class="max-w-2xl mx-auto mb-8 mt-20">
+        <div class="max-w-3xl mx-auto mb-8 mt-20">
           <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-teal-700">My Tweets</h2>
           </div>
         </div>
         
-        <ul v-if="posts.length" class="max-w-2xl mx-auto space-y-6">
+        <ul v-if="posts.length" class="max-w-3xl mx-auto space-y-6">
           <li v-for="post in posts" :key="post.id" class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
             <div class="flex flex-row justify-between items-center">
               <p class="text-xl mb-1 text-teal-600 font-semibold">@{{ authUser.name }}</p>

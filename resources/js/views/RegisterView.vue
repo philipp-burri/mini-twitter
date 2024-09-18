@@ -97,11 +97,11 @@ const handleRegister = async () => {
         <div class="flex justify-between">
           <p class="text-sm mt-8">
             Already have an account?
-            <router-link to="/login" class="text-blue-600 hover:underline">Login</router-link>
+            <router-link to="/login" class="text-teal-600 hover:underline">Login</router-link>
           </p>
           <button 
             type="submit" 
-            class=" bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-6"
+            class=" bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600  mt-6"
           >
             Register
           </button>
