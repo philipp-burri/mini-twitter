@@ -39,8 +39,9 @@
 
       <RightSidebar />
     </div>
-    <Footer />
+    
   </div>
+  <Footer />
 </template>
 
 <script setup>
