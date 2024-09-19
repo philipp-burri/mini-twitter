@@ -12,7 +12,6 @@
                 user: null,
             };
         },
-
         actions: {
             async register(credentials) {
                 try {

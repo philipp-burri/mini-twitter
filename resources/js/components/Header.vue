@@ -1,6 +1,6 @@
 <template>
   <header class="bg-gradient-to-r from-teal-200 to-teal-500 shadow-lg w-full h-[120px] flex items-center">
-    <div class="w-full mx-[9.75rem] flex justify-between items-center">
+    <div class="w-full  mx-[9.75rem] flex justify-between items-center">
       <router-link to="/" class="text-white hover:shadow-sm">
         <h1 class="font-custom text-6xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">echo.</h1>
       </router-link>

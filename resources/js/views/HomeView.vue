@@ -1,16 +1,12 @@
 <template>
-  
+  <div class="bg-gradient-to-r from-teal-50 to-green-50 min-h-screen font-body">
     <Header />
-    <div class="flex flex-col">
-    <LeftSidebar />
-    <div class="bg-gradient-to-r from-teal-50 to-green-50 min-h-screen font-body">
-    <div class="flex">
-      
+    <div class="flex justify-between">
+      <LeftSidebar class="fixed left-0 top-0 h-screen w-64" />
 
       <!-- Main content -->
-      <div class="flex-grow container mx-auto px-2 py-8 w-3/5">
-        <div class="ml-[26rem] max-w-3xl mx-auto mt-12">
-          
+      <div class="flex-grow max-w-2xl mx-auto px-4 py-8">
+        <div class="mt-12">
           <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-teal-700">Feeds</h2>
             <div class="flex space-x-2">
@@ -67,13 +63,10 @@
         </div>
       </div>
 
-      <RightSidebar />
-
+      <RightSidebar class="" />
     </div>
 
-    <Footer />
- 
-  </div>
+    <!-- <Footer /> -->
   </div>
 </template>
 

@@ -6,6 +6,7 @@
 
     html {
       font-family: Inter, system-ui, sans-serif;
+      scroll-behavior: smooth;
     }
     .custom-underline {
       @apply relative inline-block;

@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-[290px] h-full sticky top-0 left-0  bottom-0  shadow-lg z-10 overflow-y-auto">
+  <aside class="w-[300px] h-screen sticky top-0 left-0  bottom-0  shadow-lg z-10 overflow-y-auto">
     <div class="py-8 px-4">
       <!-- Profile section -->
       <div class="flex flex-col items-center mb-10">
