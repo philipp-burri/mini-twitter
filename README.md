@@ -2,3 +2,6 @@
 
 
 docker stop $(docker ps)
+
+
+attach and sync controller many to many

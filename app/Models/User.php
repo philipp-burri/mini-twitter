@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -48,5 +49,19 @@ class User extends Authenticatable
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function friends(): BelongsToMany
+    {
+            return $this->belongsToMany(User::class, 'friendships', 'user_id', 'status', 'friend_id')
+                        ->withPivot('status')
+                        ->withTimestamps();
+    }
+    public function sendFriendRequest(User $user)
+    {
+        // Überprüfen, ob bereits eine Freundschaftsanfrage existiert
+        if (!$this->friends()->where('friend_id', $user->id)->exists()) {
+            $this->friends()->attach($user->id, ['status' => 'pending']);
+        }
     }
 }

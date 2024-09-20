@@ -49,6 +49,10 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+    public function showAll(Request $request)
+    {
+        return User::all();
+    }
     /**
      * Show the form for editing the specified resource.
      */
